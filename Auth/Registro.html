@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Registro - AdminPracticantes</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#008000",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+</head>
+
+<body
+    class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen flex items-center justify-center p-4">
+    <div
+        class="w-full max-w-md bg-white dark:bg-slate-900 shadow-xl rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800">
+        <!-- Logo and Header -->
+        <div class="p-8 text-center">
+            <div class="flex justify-center items-center gap-2 mb-6">
+                <div class="size-10 bg-primary rounded-lg flex items-center justify-center text-white">
+                    <span class="material-symbols-outlined text-2xl">school</span>
+                </div>
+                <h2 class="text-2xl font-bold tracking-tight">Clinica Universitaria</h2>
+            </div>
+            <h1 class="text-3xl font-bold mb-2">Crear Cuenta</h1>
+            <p class="text-slate-500 dark:text-slate-400 text-sm">Regístrate para gestionar tus prácticas profesionales
+            </p>
+        </div>
+        <!-- Illustration/Decorative element -->
+        <div class="px-8 mb-4">
+            <div class="w-full h-32 rounded-lg bg-primary/10 flex items-center justify-center overflow-hidden relative"
+                data-alt="Abstract blue gradient pattern with geometric shapes">
+                <div class="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5"></div>
+                <span class="material-symbols-outlined text-5xl text-primary opacity-50">person_add</span>
+            </div>
+        </div>
+        <!-- Form -->
+        <form action="#" class="p-8 pt-4 space-y-4" method="POST">
+            <div>
+                <label class="block text-sm font-medium mb-1.5" for="full_name">Nombre completo</label>
+                <div class="relative">
+                    <span
+                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">person</span>
+                    <input
+                        class="w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all text-sm outline-none"
+                        id="full_name" name="full_name" placeholder="Ej. Juan Pérez" required="" type="text" />
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1.5" for="email">Correo electrónico institucional</label>
+                <div class="relative">
+                    <span
+                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">mail</span>
+                    <input
+                        class="w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all text-sm outline-none"
+                        id="email" name="email" placeholder="usuario@institucion.edu" required="" type="email" />
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1.5" for="password">Contraseña</label>
+                <div class="relative">
+                    <span
+                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">lock</span>
+                    <input
+                        class="w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all text-sm outline-none"
+                        id="password" name="password" placeholder="••••••••" required="" type="password" />
+                </div>
+            </div>
+            <div>
+                <label class="block text-sm font-medium mb-1.5" for="confirm_password">Confirmar contraseña</label>
+                <div class="relative">
+                    <span
+                        class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">lock_reset</span>
+                    <input
+                        class="w-full pl-10 pr-4 py-3 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary transition-all text-sm outline-none"
+                        id="confirm_password" name="confirm_password" placeholder="••••••••" required=""
+                        type="password" />
+                </div>
+            </div>
+            <div class="pt-4">
+                <button
+                    class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3 px-4 rounded-lg shadow-lg shadow-primary/30 flex items-center justify-center gap-2 transition-all active:scale-[0.98]"
+                    type="submit">
+                    <span>Registrarse</span>
+                    <span class="material-symbols-outlined">arrow_forward</span>
+                </button>
+            </div>
+        </form>
+        <!-- Footer Link -->
+        <div class="p-6 bg-slate-50 dark:bg-slate-800/50 border-t border-slate-200 dark:border-slate-800 text-center">
+            <p class="text-sm text-slate-600 dark:text-slate-400">
+                ¿Ya tienes una cuenta?
+                <a class="text-primary font-semibold hover:underline" href="Ingreso.html">Inicia sesión aquí</a>
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>

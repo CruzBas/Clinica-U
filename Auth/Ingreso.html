@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Login - Sistema de Administración de Practicantes</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap"
+        rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#008000",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark min-h-screen flex items-center justify-center p-4">
+    <div class="w-full max-w-[480px] bg-white dark:bg-slate-900 rounded-xl shadow-xl overflow-hidden">
+        <!-- Header Image / Logo Section -->
+        <div class="relative h-48 w-full bg-primary/10 flex items-center justify-center">
+            <div class="absolute inset-0 bg-cover bg-center opacity-20"
+                data-alt="Oficina moderna con computadoras y luz natural"
+                style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBDbN1rdrvwOi46EpSKwm6AQhNaoLgw4Y5KurjNSe4VsmTfZZwvG__3EO1MUQb_E3AFN6DRCgFh1PsZf1ZTVOcOm1LB1o8x74enzGAjkjeVczlCzpp5gXdMQjKk1BaysjfCs7XFnaoZYQJ91TeBSWaMQuVdXq57lGe4jDatUZSxM_9oJD0rKwDWMvHfx1cAT1yEbPYREdilNv5Joj1BoVdgPbiwrfd8fwuUxKcJazacUw-5amMf_XNIRUeOvy3ew3yBy6uTeWrGSyE')">
+            </div>
+            <div class="relative z-10 flex flex-col items-center">
+                <div class="bg-primary p-3 rounded-xl mb-3 shadow-lg">
+                    <span class="material-symbols-outlined text-white text-4xl">
+                        school
+                    </span>
+                </div>
+                <h2 class="text-slate-900 dark:text-slate-100 font-bold text-xl tracking-tight">Portal de Practicantes
+                </h2>
+            </div>
+        </div>
+        <div class="p-8">
+            <!-- Header Text -->
+            <div class="mb-8">
+                <h1 class="text-slate-900 dark:text-slate-100 text-3xl font-bold leading-tight">Iniciar Sesión</h1>
+                <p class="text-slate-500 dark:text-slate-400 text-sm mt-2">Bienvenido al sistema administrativo de
+                    pasantías</p>
+            </div>
+            <!-- Form -->
+            <form action="#" class="space-y-5"
+                onsubmit="window.location.href='../Modulo_Profresor/Dashboard_Profesor.html'; return false;">
+                <!-- Email Field -->
+                <div class="flex flex-col gap-2">
+                    <label class="text-slate-700 dark:text-slate-300 text-sm font-medium">Correo electrónico</label>
+                    <div class="relative">
+                        <span
+                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">
+                            mail
+                        </span>
+                        <input
+                            class="w-full pl-11 pr-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
+                            placeholder="usuario@institucion.com" required="" type="email" />
+                    </div>
+                </div>
+                <!-- Password Field -->
+                <div class="flex flex-col gap-2">
+                    <div class="flex justify-between items-center">
+                        <label class="text-slate-700 dark:text-slate-300 text-sm font-medium">Contraseña</label>
+                        <a class="text-primary text-xs font-semibold hover:underline" href="#">¿Olvidaste tu
+                            contraseña?</a>
+                    </div>
+                    <div class="relative">
+                        <span
+                            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">
+                            lock
+                        </span>
+                        <input
+                            class="w-full pl-11 pr-12 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
+                            placeholder="••••••••" required="" type="password" />
+
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <button
+                    class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3.5 rounded-lg transition-colors shadow-lg shadow-primary/20 flex items-center justify-center gap-2 mt-2"
+                    type="submit" onclick="location.href='../Modulo_Profesor/Dashboard_Profesor.html'">
+                    Entrar
+                    <span class="material-symbols-outlined text-xl">
+                        login
+                    </span>
+                </button>
+            </form>
+            <!-- Registration Footer -->
+            <div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 text-center">
+                <p class="text-slate-600 dark:text-slate-400 text-sm">
+                    ¿Aún no tienes una cuenta?
+                    <a class="text-primary font-bold hover:underline ml-1" href="Registro.html">Regístrate aquí</a>
+                </p>
+            </div>
+        </div>
+        <!-- System Footer Info -->
+        <div class="bg-slate-50 dark:bg-slate-800/50 px-8 py-4 flex justify-between items-center">
+            <span class="text-[10px] text-slate-400 dark:text-slate-500 uppercase tracking-widest font-bold">Versión
+                0.0.0</span>
+
+        </div>
+    </div>
+</body>
+
+</html>
