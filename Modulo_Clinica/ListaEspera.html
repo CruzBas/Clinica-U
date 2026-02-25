@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Modulo Clínica - Lista de Espera</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap"
+        rel="stylesheet" />
+    <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#008000",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101622",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Custom scrollbar for horizontal table */
+        .scrollbar-thin::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .scrollbar-thin::-webkit-scrollbar-thumb {
+            background: #e2e8f0;
+            border-radius: 10px;
+        }
+
+        .dark .scrollbar-thin::-webkit-scrollbar-thumb {
+            background: #334155;
+        }
+    </style>
+</head>
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
+    <div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden">
+
+        <!-- Top Navigation Bar -->
+        <header
+            class="flex items-center justify-between whitespace-nowrap border-b border-solid border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-3 sticky top-0 z-50">
+            <div class="flex items-center gap-4">
+                <button id="mobile-menu-button"
+                    class="lg:hidden flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300">
+                    <span class="material-symbols-outlined">menu</span>
+                </button>
+                <div class="flex items-center gap-3 text-primary">
+                    <div class="size-8 flex items-center justify-center bg-primary/10 rounded-lg">
+                        <span class="material-symbols-outlined text-primary text-2xl">school</span>
+                    </div>
+                    <h2 class="text-slate-900 dark:text-slate-100 text-lg font-bold leading-tight tracking-tight">
+                        Panel de Clínica</h2>
+                </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="flex gap-2">
+                    <button
+                        class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700">
+                        <span class="material-symbols-outlined">notifications</span>
+                    </button>
+                    <button
+                        class="flex items-center justify-center rounded-lg h-10 w-10 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700">
+                        <span class="material-symbols-outlined">settings</span>
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <div class="flex flex-1">
+            <!-- Sidebar Navigation -->
+            <aside id="sidebar"
+                class="fixed inset-y-0 left-0 z-50 w-64 transform -translate-x-full transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0 flex flex-col border-r border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 gap-6 overflow-y-auto">
+                <button id="close-menu-button"
+                    class="lg:hidden absolute top-4 right-4 text-slate-500 hover:text-slate-700">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+
+                <div class="flex flex-col gap-1 mt-8 lg:mt-0">
+                    <h1 class="text-slate-900 dark:text-slate-100 text-base font-bold">Cohorte de Verano 2024</h1>
+                    <p class="text-slate-500 dark:text-slate-400 text-xs text-primary font-bold">MODULO CLINICA</p>
+                </div>
+
+                <nav class="flex flex-col gap-2">
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium"
+                        href="Dashboard.html">
+                        <span class="material-symbols-outlined text-xl">dashboard</span>
+                        <span class="text-sm">Tablero</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg bg-primary text-white font-medium"
+                        href="ListaEspera.html">
+                        <span class="material-symbols-outlined text-xl">group</span>
+                        <span class="text-sm">Lista de espera</span>
+                    </a>
+                    <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 font-medium"
+                        href="CitasConfirmadas.html">
+                        <span class="material-symbols-outlined text-xl">event_available</span>
+                        <span class="text-sm">Citas Confirmadas</span>
+                    </a>
+                </nav>
+
+                <div class="mt-auto p-4 rounded-xl bg-primary/10 border border-primary/20">
+                    <p class="text-xs font-bold text-primary uppercase tracking-wider mb-2">SOPORTE</p>
+                    <p class="text-xs text-slate-600 dark:text-slate-400 leading-relaxed">¿Necesitas ayuda con las
+                        solicitudes?</p>
+                    <button
+                        class="mt-3 text-sm font-semibold text-primary hover:underline flex items-center gap-1">Contactar
+                        Soporte <span class="material-symbols-outlined text-sm">arrow_forward</span></button>
+                </div>
+            </aside>
+
+            <!-- Overlay for mobile menu -->
+            <div id="sidebar-overlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-40 hidden lg:hidden">
+            </div>
+
+            <!-- Main Content Area -->
+            <main class="flex-1 flex flex-col p-4 sm:p-6 lg:p-8 gap-6 overflow-y-auto w-full">
+                <div class="flex flex-col gap-2">
+                    <h2 class="text-2xl sm:text-3xl font-black tracking-tight">Lista de Espera</h2>
+                    <p class="text-slate-500 dark:text-slate-400 text-sm">Selecciona pacientes para compartir sus
+                        expedientes con los profesores encargados.</p>
+                </div>
+
+                <!-- Bulk Action & Professor Selection Bar -->
+                <div id="selection-bar" class="hidden animate-in fade-in slide-in-from-top-4 duration-300">
+                    <div
+                        class="bg-primary/10 border border-primary/20 rounded-xl p-4 flex flex-col lg:flex-row items-center justify-between gap-4">
+                        <div class="flex items-center gap-4">
+                            <div class="bg-primary text-white size-6 rounded-full flex items-center justify-center text-xs font-bold"
+                                id="selected-count">0</div>
+                            <span class="text-primary font-semibold text-sm">Pacientes Seleccionados</span>
+                        </div>
+
+                        <div class="flex flex-col sm:flex-row items-center gap-3 w-full lg:w-auto">
+                            <div class="relative w-full sm:w-80 group">
+                                <button id="professor-dropdown-btn"
+                                    class="w-full px-4 py-2 bg-white dark:bg-slate-800 border border-primary/20 rounded-lg text-sm flex items-center justify-between font-medium outline-none focus:ring-2 focus:ring-primary/20 transition-all">
+                                    <span id="professor-btn-text">Seleccionar Profesores...</span>
+                                    <span
+                                        class="material-symbols-outlined text-primary group-hover:translate-y-0.5 transition-transform">expand_more</span>
+                                </button>
+
+                                <!-- Professor Dropdown Menu -->
+                                <div id="professor-menu"
+                                    class="absolute top-full left-0 right-0 mt-2 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl shadow-xl z-50 hidden flex-col p-2 animate-in fade-in zoom-in-95 duration-200">
+                                    <div class="p-2 border-b border-slate-100 dark:border-slate-800 mb-2">
+                                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+                                            Profesores Disponibles</p>
+                                    </div>
+                                    <div class="flex flex-col gap-1 max-h-48 overflow-y-auto scrollbar-thin">
+                                        <label
+                                            class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-colors">
+                                            <input type="checkbox"
+                                                class="prof-cb rounded text-primary focus:ring-primary"
+                                                value="Dr. Ricardo Espinoza">
+                                            <div class="flex flex-col">
+                                                <span class="text-xs font-bold">Dr. Ricardo Espinoza</span>
+                                                <span class="text-[10px] text-slate-400">Medicina General</span>
+                                            </div>
+                                        </label>
+                                        <label
+                                            class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-colors">
+                                            <input type="checkbox"
+                                                class="prof-cb rounded text-primary focus:ring-primary"
+                                                value="Dra. Marta Sánchez">
+                                            <div class="flex flex-col">
+                                                <span class="text-xs font-bold">Dra. Marta Sánchez</span>
+                                                <span class="text-[10px] text-slate-400">Odontología</span>
+                                            </div>
+                                        </label>
+                                        <label
+                                            class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-colors">
+                                            <input type="checkbox"
+                                                class="prof-cb rounded text-primary focus:ring-primary"
+                                                value="Dr. Carlos Vaca">
+                                            <div class="flex flex-col">
+                                                <span class="text-xs font-bold">Dr. Carlos Vaca</span>
+                                                <span class="text-[10px] text-slate-400">Dermatología</span>
+                                            </div>
+                                        </label>
+                                        <label
+                                            class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 cursor-pointer transition-colors">
+                                            <input type="checkbox"
+                                                class="prof-cb rounded text-primary focus:ring-primary"
+                                                value="Dra. Elena Martínez">
+                                            <div class="flex flex-col">
+                                                <span class="text-xs font-bold">Dra. Elena Martínez</span>
+                                                <span class="text-[10px] text-slate-400">Pediatría</span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="flex gap-2 w-full sm:w-auto">
+                                <button onclick="shareRequested()"
+                                    class="flex-1 sm:flex-none bg-primary text-white px-6 py-2 rounded-lg text-sm font-bold flex items-center justify-center gap-2 hover:bg-primary/90 transition-colors shadow-lg shadow-primary/20">
+                                    <span class="material-symbols-outlined text-base font-bold">send</span>
+                                    Compartir
+                                </button>
+                                <button onclick="clearSelection()"
+                                    class="flex-1 sm:flex-none text-slate-500 hover:bg-slate-100 dark:hover:bg-slate-800 px-4 py-2 rounded-lg text-sm font-semibold transition-colors">
+                                    Cancelar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Table -->
+                <div
+                    class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden flex flex-col">
+                    <div
+                        class="p-4 sm:p-6 border-b border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                        <div class="relative w-full sm:w-72">
+                            <span
+                                class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-lg">search</span>
+                            <input type="text" placeholder="Filtrar por nombre o servicio..."
+                                class="w-full pl-10 pr-4 py-2 rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-sm outline-none focus:ring-2 focus:ring-primary/20" />
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto scrollbar-thin">
+                        <table class="w-full text-left border-collapse min-w-[800px]">
+                            <thead>
+                                <tr class="bg-slate-50 dark:bg-slate-800/50">
+                                    <th class="px-6 py-4 w-12">
+                                        <input type="checkbox" id="select-all"
+                                            class="rounded border-slate-300 dark:border-slate-700 text-primary focus:ring-primary bg-transparent" />
+                                    </th>
+                                    <th
+                                        class="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                                        Nombre del Paciente</th>
+                                    <th
+                                        class="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                                        Servicio</th>
+                                    <th
+                                        class="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                                        Fecha Recibida</th>
+                                    <th
+                                        class="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                                        Prioridad</th>
+                                    <th
+                                        class="px-6 py-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">
+                                        Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-slate-100 dark:divide-slate-800" id="table-body">
+                                <!-- Patient 1 -->
+                                <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                                    <td class="px-6 py-4">
+                                        <input type="checkbox"
+                                            class="patient-checkbox rounded border-slate-300 dark:border-slate-700 text-primary focus:ring-primary bg-transparent" />
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap font-medium">Juan Pérez</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-slate-600 dark:text-slate-400">Consulta
+                                        General</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-slate-600 dark:text-slate-400">
+                                        24/10/2023</td>
+                                    <td class="px-6 py-4">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-rose-100 text-rose-800 dark:bg-rose-900/30 dark:text-rose-400">Alta</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400">Pendiente</span>
+                                    </td>
+                                </tr>
+                                <!-- Patient 2 -->
+                                <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                                    <td class="px-6 py-4">
+                                        <input type="checkbox"
+                                            class="patient-checkbox rounded border-slate-300 dark:border-slate-700 text-primary focus:ring-primary bg-transparent" />
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap font-medium">María García</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-slate-600 dark:text-slate-400">
+                                        Odontología</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-slate-600 dark:text-slate-400">
+                                        24/10/2023</td>
+                                    <td class="px-6 py-4">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400">Media</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400">Pendiente</span>
+                                    </td>
+                                </tr>
+                                <!-- Patient 3 -->
+                                <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                                    <td class="px-6 py-4">
+                                        <input type="checkbox"
+                                            class="patient-checkbox rounded border-slate-300 dark:border-slate-700 text-primary focus:ring-primary bg-transparent" />
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap font-medium">Carlos López</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-slate-600 dark:text-slate-400">
+                                        Dermatología</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-slate-600 dark:text-slate-400">
+                                        23/10/2023</td>
+                                    <td class="px-6 py-4">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-slate-100 text-slate-800 dark:bg-slate-700 dark:text-slate-300">Baja</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400">Pendiente</span>
+                                    </td>
+                                </tr>
+                                <!-- Patient 4 -->
+                                <tr class="hover:bg-slate-50/50 dark:hover:bg-slate-800/30 transition-colors">
+                                    <td class="px-6 py-4">
+                                        <input type="checkbox"
+                                            class="patient-checkbox rounded border-slate-300 dark:border-slate-700 text-primary focus:ring-primary bg-transparent" />
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap font-medium">Ana Martínez</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-slate-600 dark:text-slate-400">Pediatría
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-slate-600 dark:text-slate-400">
+                                        23/10/2023</td>
+                                    <td class="px-6 py-4">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-rose-100 text-rose-800 dark:bg-rose-900/30 dark:text-rose-400">Alta</span>
+                                    </td>
+                                    <td class="px-6 py-4">
+                                        <span
+                                            class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-400">Pendiente</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div
+                        class="px-6 py-4 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <p class="text-sm text-slate-500 dark:text-slate-400 text-center sm:text-left">Mostrando 4 de
+                            128 pacientes en espera</p>
+                        <div class="flex items-center gap-2">
+                            <button
+                                class="size-8 flex items-center justify-center rounded border border-slate-200 dark:border-slate-800 text-slate-400 disabled:opacity-50">
+                                <span class="material-symbols-outlined text-base">chevron_left</span>
+                            </button>
+                            <button
+                                class="size-8 flex items-center justify-center rounded border border-slate-200 dark:border-slate-800 bg-primary text-white text-sm font-medium">1</button>
+                            <button
+                                class="size-8 flex items-center justify-center rounded border border-slate-200 dark:border-slate-800 text-slate-600 dark:text-slate-400 text-sm font-medium">2</button>
+                            <button
+                                class="size-8 flex items-center justify-center rounded border border-slate-200 dark:border-slate-800 text-slate-400">
+                                <span class="material-symbols-outlined text-base">chevron_right</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div id="success-modal"
+        class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm">
+        <div
+            class="bg-white dark:bg-slate-900 rounded-2xl p-8 max-w-sm w-full text-center shadow-2xl border border-slate-200 dark:border-slate-800">
+            <div
+                class="size-20 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                <span class="material-symbols-outlined text-4xl">check_circle</span>
+            </div>
+            <h4 class="text-xl font-bold mb-2">¡Compartido con Éxito!</h4>
+            <p class="text-slate-500 dark:text-slate-400 text-sm mb-6">Los expedientes han sido enviados al profesor
+                seleccionado correctamente.</p>
+            <button onclick="closeModal()"
+                class="w-full bg-slate-900 dark:bg-slate-100 dark:text-slate-900 text-white font-bold py-3 rounded-xl hover:opacity-90 transition-opacity">
+                Entendido
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const closeMenuButton = document.getElementById('close-menu-button');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+
+        const selectAll = document.getElementById('select-all');
+        const patientCheckboxes = document.querySelectorAll('.patient-checkbox');
+        const selectionBar = document.getElementById('selection-bar');
+        const selectedCountLabel = document.getElementById('selected-count');
+        const professorBtn = document.getElementById('professor-dropdown-btn');
+        const professorMenu = document.getElementById('professor-menu');
+        const professorCheckboxes = document.querySelectorAll('.prof-cb');
+        const professorBtnText = document.getElementById('professor-btn-text');
+        const successModal = document.getElementById('success-modal');
+
+        function toggleMenu() {
+            sidebar.classList.toggle('-translate-x-full');
+            overlay.classList.toggle('hidden');
+            document.body.classList.toggle('overflow-hidden');
+        }
+
+        mobileMenuButton.addEventListener('click', toggleMenu);
+        closeMenuButton.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', toggleMenu);
+
+        // Selection Logic
+        function updateSelection() {
+            const selected = Array.from(patientCheckboxes).filter(cb => cb.checked);
+            const count = selected.length;
+
+            if (count > 0) {
+                selectionBar.classList.remove('hidden');
+                selectionBar.classList.add('flex');
+            } else {
+                selectionBar.classList.add('hidden');
+                selectionBar.classList.remove('flex');
+            }
+
+            selectedCountLabel.innerText = count;
+            selectAll.checked = count === patientCheckboxes.length;
+        }
+
+        selectAll.addEventListener('change', (e) => {
+            patientCheckboxes.forEach(cb => cb.checked = e.target.checked);
+            updateSelection();
+        });
+
+        patientCheckboxes.forEach(cb => {
+            cb.addEventListener('change', updateSelection);
+        });
+
+        // Professor Dropdown Logic
+        professorBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            professorMenu.classList.toggle('hidden');
+            professorMenu.classList.toggle('flex');
+        });
+
+        document.addEventListener('click', (e) => {
+            if (!professorMenu.contains(e.target) && !professorBtn.contains(e.target)) {
+                professorMenu.classList.add('hidden');
+                professorMenu.classList.remove('flex');
+            }
+        });
+
+        function updateProfessorBtn() {
+            const selectedProfs = Array.from(professorCheckboxes)
+                .filter(cb => cb.checked)
+                .map(cb => cb.value);
+
+            if (selectedProfs.length === 0) {
+                professorBtnText.innerText = "Seleccionar Profesores...";
+                professorBtnText.classList.remove('text-primary');
+            } else if (selectedProfs.length === 1) {
+                professorBtnText.innerText = selectedProfs[0];
+                professorBtnText.classList.add('text-primary');
+            } else {
+                professorBtnText.innerText = `${selectedProfs.length} Profesores Seleccionados`;
+                professorBtnText.classList.add('text-primary');
+            }
+        }
+
+        professorCheckboxes.forEach(cb => {
+            cb.addEventListener('change', updateProfessorBtn);
+        });
+
+        function clearSelection() {
+            patientCheckboxes.forEach(cb => cb.checked = false);
+            professorCheckboxes.forEach(cb => cb.checked = false);
+            selectAll.checked = false;
+            updateSelection();
+            updateProfessorBtn();
+            professorMenu.classList.add('hidden');
+        }
+
+        function shareRequested() {
+            const selectedProfs = Array.from(professorCheckboxes).filter(cb => cb.checked);
+            if (selectedProfs.length === 0) {
+                alert('Por favor selecciona al menos un profesor.');
+                return;
+            }
+
+            successModal.classList.remove('hidden');
+            successModal.classList.add('flex');
+        }
+
+        function closeModal() {
+            successModal.classList.add('hidden');
+            successModal.classList.remove('flex');
+            clearSelection();
+        }
+    </script>
+</body>
+
+</html>

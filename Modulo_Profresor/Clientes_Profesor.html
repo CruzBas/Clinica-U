@@ -168,23 +168,23 @@
                     </div>
 
                     <!-- Bulk Action Bar -->
-                    <div
-                        class="bg-primary/10 border border-primary/20 rounded-xl p-4 mb-6 flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div id="selection-bar"
+                        class="hidden bg-primary/10 border border-primary/20 rounded-xl p-4 mb-6 flex flex-col md:flex-row items-center justify-between gap-4">
                         <div class="flex items-center gap-4">
-                            <div
+                            <div id="selected-count"
                                 class="bg-primary text-white size-6 rounded-full flex items-center justify-center text-xs font-bold">
-                                3</div>
+                                0</div>
                             <span class="text-primary font-semibold text-sm">Personas Seleccionadas</span>
                         </div>
                         <div class="flex flex-wrap gap-2 justify-center">
                             <button
-                                class="bg-green-600 text-white px-4 py-1.5 rounded-lg text-sm font-bold flex items-center gap-2">
+                                class="bg-green-600 text-white px-4 py-1.5 rounded-lg text-sm font-bold flex items-center gap-2 hover:bg-green-700 transition-colors">
                                 <span class="material-symbols-outlined text-base">check_circle</span>
                                 <span class="whitespace-nowrap">Enviar a estudiantes</span>
                             </button>
 
-                            <button
-                                class="text-red-500 hover:bg-red-50 px-4 py-1.5 rounded-lg text-sm font-bold whitespace-nowrap">Cancelar</button>
+                            <button onclick="clearSelection()"
+                                class="text-red-500 hover:bg-red-50 px-4 py-1.5 rounded-lg text-sm font-bold whitespace-nowrap transition-colors">Cancelar</button>
                         </div>
                     </div>
                     <!-- Data Table -->
@@ -196,7 +196,7 @@
                                     <tr
                                         class="bg-slate-50 dark:bg-slate-800/50 border-b border-slate-200 dark:border-slate-800">
                                         <th class="py-4 px-6 w-12">
-                                            <input
+                                            <input id="select-all"
                                                 class="rounded border-slate-300 dark:border-slate-600 text-primary focus:ring-primary bg-transparent"
                                                 type="checkbox" />
                                         </th>
@@ -217,8 +217,8 @@
                                     <!-- Row 1 -->
                                     <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
                                         <td class="py-4 px-6">
-                                            <input checked=""
-                                                class="rounded border-slate-300 dark:border-slate-600 text-primary focus:ring-primary bg-transparent"
+                                            <input
+                                                class="practitioner-checkbox rounded border-slate-300 dark:border-slate-600 text-primary focus:ring-primary bg-transparent"
                                                 type="checkbox" />
                                         </td>
                                         <td class="py-4 px-6">
@@ -245,8 +245,8 @@
                                     <!-- Row 2 -->
                                     <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
                                         <td class="py-4 px-6">
-                                            <input checked=""
-                                                class="rounded border-slate-300 dark:border-slate-600 text-primary focus:ring-primary bg-transparent"
+                                            <input
+                                                class="practitioner-checkbox rounded border-slate-300 dark:border-slate-600 text-primary focus:ring-primary bg-transparent"
                                                 type="checkbox" />
                                         </td>
                                         <td class="py-4 px-6">
@@ -273,8 +273,8 @@
                                     <!-- Row 3 -->
                                     <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
                                         <td class="py-4 px-6">
-                                            <input checked=""
-                                                class="rounded border-slate-300 dark:border-slate-600 text-primary focus:ring-primary bg-transparent"
+                                            <input
+                                                class="practitioner-checkbox rounded border-slate-300 dark:border-slate-600 text-primary focus:ring-primary bg-transparent"
                                                 type="checkbox" />
                                         </td>
                                         <td class="py-4 px-6">
@@ -306,7 +306,7 @@
                                     <tr class="hover:bg-slate-50 dark:hover:bg-slate-800/30 transition-colors">
                                         <td class="py-4 px-6">
                                             <input
-                                                class="rounded border-slate-300 dark:border-slate-600 text-primary focus:ring-primary bg-transparent"
+                                                class="practitioner-checkbox rounded border-slate-300 dark:border-slate-600 text-primary focus:ring-primary bg-transparent"
                                                 type="checkbox" />
                                         </td>
                                         <td class="py-4 px-6">
@@ -370,6 +370,11 @@
                 const sidebar = document.getElementById('sidebar');
                 const overlay = document.getElementById('sidebar-overlay');
 
+                const selectAll = document.getElementById('select-all');
+                const practitionerCheckboxes = document.querySelectorAll('.practitioner-checkbox');
+                const selectionBar = document.getElementById('selection-bar');
+                const selectedCountLabel = document.getElementById('selected-count');
+
                 function toggleMenu() {
                     sidebar.classList.toggle('-translate-x-full');
                     overlay.classList.toggle('hidden');
@@ -379,4 +384,44 @@
                 mobileMenuButton.addEventListener('click', toggleMenu);
                 closeMenuButton.addEventListener('click', toggleMenu);
                 overlay.addEventListener('click', toggleMenu);
+
+                // Selection Logic
+                function updateSelection() {
+                    const selected = Array.from(practitionerCheckboxes).filter(cb => cb.checked);
+                    const count = selected.length;
+
+                    if (count > 0) {
+                        selectionBar.classList.remove('hidden');
+                        selectionBar.classList.add('flex');
+                    } else {
+                        selectionBar.classList.add('hidden');
+                        selectionBar.classList.remove('flex');
+                    }
+
+                    selectedCountLabel.innerText = count;
+                    if (selectAll) {
+                        selectAll.checked = count > 0 && count === practitionerCheckboxes.length;
+                        selectAll.indeterminate = count > 0 && count < practitionerCheckboxes.length;
+                    }
+                }
+
+                if (selectAll) {
+                    selectAll.addEventListener('change', (e) => {
+                        practitionerCheckboxes.forEach(cb => cb.checked = e.target.checked);
+                        updateSelection();
+                    });
+                }
+
+                practitionerCheckboxes.forEach(cb => {
+                    cb.addEventListener('change', updateSelection);
+                });
+
+                function clearSelection() {
+                    practitionerCheckboxes.forEach(cb => cb.checked = false);
+                    if (selectAll) {
+                        selectAll.checked = false;
+                        selectAll.indeterminate = false;
+                    }
+                    updateSelection();
+                }
             </script>

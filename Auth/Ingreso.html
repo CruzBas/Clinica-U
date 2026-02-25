@@ -70,8 +70,7 @@
                     pasantías</p>
             </div>
             <!-- Form -->
-            <form action="#" class="space-y-5"
-                onsubmit="window.location.href='../Modulo_Profresor/Dashboard_Profesor.html'; return false;">
+            <form id="login-form" class="space-y-5">
                 <!-- Email Field -->
                 <div class="flex flex-col gap-2">
                     <label class="text-slate-700 dark:text-slate-300 text-sm font-medium">Correo electrónico</label>
@@ -80,7 +79,7 @@
                             class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">
                             mail
                         </span>
-                        <input
+                        <input id="email"
                             class="w-full pl-11 pr-4 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
                             placeholder="usuario@institucion.com" required="" type="email" />
                     </div>
@@ -97,7 +96,7 @@
                             class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 text-xl">
                             lock
                         </span>
-                        <input
+                        <input id="password"
                             class="w-full pl-11 pr-12 py-3 rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 focus:ring-2 focus:ring-primary/20 focus:border-primary outline-none transition-all"
                             placeholder="••••••••" required="" type="password" />
 
@@ -107,13 +106,29 @@
                 <!-- Submit Button -->
                 <button
                     class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-3.5 rounded-lg transition-colors shadow-lg shadow-primary/20 flex items-center justify-center gap-2 mt-2"
-                    type="submit" onclick="location.href='../Modulo_Profesor/Dashboard_Profesor.html'">
+                    type="submit">
                     Entrar
                     <span class="material-symbols-outlined text-xl">
                         login
                     </span>
                 </button>
             </form>
+            <script>
+                document.getElementById('login-form').addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    const email = document.getElementById('email').value.toLowerCase();
+
+                    if (email === 'profesor@clinica.com') {
+                        window.location.href = '../Modulo_Profresor/Dashboard_Profesor.html';
+                    } else if (email === 'estudiante@clinica.com') {
+                        window.location.href = '../Modulo_Clinica/Dashboard.html';
+                    } else if (email === 'practicante@clinica.com') {
+                        window.location.href = '../Modulo_Estudiante/DashboardPracticante.html';
+                    } else {
+                        alert('Usuario no reconocido. Use profesor@clinica.com, estudiante@clinica.com o practicante@clinica.com');
+                    }
+                });
+            </script>
             <!-- Registration Footer -->
             <div class="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 text-center">
                 <p class="text-slate-600 dark:text-slate-400 text-sm">
